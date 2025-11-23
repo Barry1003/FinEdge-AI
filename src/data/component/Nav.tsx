@@ -8,8 +8,9 @@ import {
   ChevronDown,
   Menu,
 } from "lucide-react";
-import { supplyChainAlerts } from "../../data/dashboardData";
-import AlertCenter from "./DashordComponent/alertCenter";
+import AlertCenterContainer from "./AlertCenter/AlertCenterContainer";
+
+// 🔥 Import the global alert container we created
 
 interface NavbarProps {
   cashCrisisAlert?: {
@@ -31,7 +32,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     <nav className="bg-slate-900 border-b border-slate-700 px-4 sm:px-6 h-16 flex items-center justify-between">
       {/* Left Section - Logo & Menu */}
       <div className="flex items-center gap-4">
-        {/* Mobile Menu Button */}
         <button className="lg:hidden text-slate-400 hover:text-white transition-colors">
           <Menu className="w-6 h-6" />
         </button>
@@ -41,9 +41,9 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
       <div className="flex-1 max-w-xl mx-4 hidden md:block">
         <div
           className={`
-          relative flex items-center bg-slate-800 rounded-lg border transition-colors
-          ${searchFocused ? "border-blue-500 ring-1 ring-blue-500" : "border-slate-700"}
-        `}
+            relative flex items-center bg-slate-800 rounded-lg border transition-colors
+            ${searchFocused ? "border-blue-500 ring-1 ring-blue-500" : "border-slate-700"}
+          `}
         >
           <Search className="w-5 h-5 text-slate-400 ml-3" />
           <input
@@ -59,15 +59,15 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         </div>
       </div>
 
-      {/* Right Section - Actions & Profile */}
+      {/* Right Section */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Search Icon (Mobile) */}
+        {/* Mobile Search */}
         <button className="md:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
           <Search className="w-5 h-5" />
         </button>
 
-        {/* Notifications */}
-        <AlertCenter />
+        {/* Alert Bell Connected to Alert Panel */}
+        <AlertCenterContainer />
 
         {/* Apps Grid */}
         <button className="hidden sm:flex p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
@@ -112,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
           </button>
 
-          {/* Profile Dropdown */}
+          {/* Dropdown */}
           {profileOpen && (
             <>
               <div

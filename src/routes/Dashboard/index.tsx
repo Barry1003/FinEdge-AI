@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import FinancialDashboard from "../../data/component/DashordComponent/Analytics";
-import { dashboardData } from "../../data/dashboardData"; // Import your data
 import CashFlowTrendChart from "../../data/component/DashordComponent/cashFlowChart";
+import { dashboardData } from "../../data/dashboardData";
+import ExpenseBreakdown from "../../data/component/DashordComponent/ExpenseBreakdown";
+import RecentTransactionsTable from "../../data/component/DashordComponent/RecentTransactionsTable";
+import QuickActionsDemo from "../../data/component/DashordComponent/QuickAcion";
+import TaxObligationsWidget from "../../data/component/DashordComponent/Tax";
 
 export const Route = createFileRoute("/Dashboard/")({
   component: RouteComponent,
@@ -13,13 +17,12 @@ function RouteComponent() {
 }
 
 const Dashboard: React.FC = () => {
-  // Get available months from dashboardData
   const months = Object.keys(dashboardData);
+
   const [selectedMonth, setSelectedMonth] = useState<string>(
     months[months.length - 1]
-  ); // Default to latest month
+  );
 
-  // Get current month's data
   const currentData =
     dashboardData[selectedMonth as keyof typeof dashboardData];
 
@@ -29,7 +32,7 @@ const Dashboard: React.FC = () => {
         <FinancialDashboard />
 
         {/* Month Selector */}
-        <div className="mb-8 mt-8 flex gap-4 items-center bg-slate-800 p-4 rounded-lg border border-slate-700">
+        <div className="mt-8 mb-8 flex items-center gap-4 bg-slate-800 p-4 rounded-lg border border-slate-700">
           <label className="text-white font-semibold">Select Month:</label>
           <select
             value={selectedMonth}
@@ -52,6 +55,15 @@ const Dashboard: React.FC = () => {
           height={300}
           currency="₦"
         />
+
+        <RecentTransactionsTable />
+        <div className="flex flex-col justify-between md:flex-row gap-6 mt-8">
+          <ExpenseBreakdown />
+          <div className="flex flex-col gap-4 md:w-1/2">
+            <QuickActionsDemo />
+            <TaxObligationsWidget />
+          </div>
+        </div>
       </div>
     </div>
   );

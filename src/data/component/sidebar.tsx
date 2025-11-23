@@ -167,11 +167,11 @@ const Sidebar: React.FC = () => {
 
           <NavItem
             icon={<MessageSquare className="w-5 h-5" />}
-            label="Ai_Coach"
-            route="/coach"
-            active={activeItem === 'coach'}
+            label="AICoach"
+            route="/Ai_coach"
+            active={activeItem === 'Ai_coach'}
             isCollapsed={isCollapsed}
-            onClick={() => goTo('/coach', 'coach')}
+            onClick={() => goTo('/Ai_coach', 'Ai_coach')}
           />
 
           <NavItem

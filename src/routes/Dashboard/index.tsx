@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
         <FinancialDashboard />
 
         {/* Month Selector */}
-        <div className="mt-8 mb-8 flex items-center gap-4 bg-slate-800 p-4 rounded-lg border border-slate-700">
+        <div className="mt-8 mb-8  flex items-center gap-4 bg-slate-800 p-4 rounded-lg border border-slate-700">
           <label className="text-white font-semibold">Select Month:</label>
           <select
             value={selectedMonth}

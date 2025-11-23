@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import {
-  Search,
-  Grid3x3,
-  Settings,
-  Sun,
-  Moon,
-  ChevronDown,
-  Menu,
-} from "lucide-react";
+import { Search, Settings, Sun, Moon, ChevronDown, Menu } from "lucide-react";
 import AlertCenterContainer from "./AlertCenter/AlertCenterContainer";
-
-// 🔥 Import the global alert container we created
+import { useNavigate } from "@tanstack/react-router";
 
 interface NavbarProps {
   cashCrisisAlert?: {
@@ -27,6 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const [searchFocused, setSearchFocused] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const navigate = useNavigate();
 
   return (
     <nav className="bg-slate-900 border-b border-slate-700 px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -69,13 +61,11 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         {/* Alert Bell Connected to Alert Panel */}
         <AlertCenterContainer />
 
-        {/* Apps Grid */}
-        <button className="hidden sm:flex p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
-          <Grid3x3 className="w-5 h-5" />
-        </button>
-
         {/* Settings */}
-        <button className="hidden sm:flex p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+        <button
+          onClick={() => navigate({ to: "/settings/" })}
+          className="hidden sm:flex p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+        >
           <Settings className="w-5 h-5" />
         </button>
 

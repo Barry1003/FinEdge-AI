@@ -432,7 +432,6 @@ export const AlertPanel = ({ alerts, isOpen, onClose }: AlertPanelProps) => {
 // Main Demo Component
 export default function AlertCenterDemo() {
   const [isAlertPanelOpen, setIsAlertPanelOpen] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // Mock data for demo
   const mockExpenseBreakdown = [

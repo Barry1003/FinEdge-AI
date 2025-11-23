@@ -65,20 +65,7 @@ const BANKS: BankAccount[] = [
 ];
 
 // Generate realistic dummy transactions
-const generateDummyTransactions = (bank: string): Transaction[] => {
-  const descriptions = [
-    { text: "Salary Transfer", category: "income" },
-    { text: "Supplier Payment", category: "expense" },
-    { text: "Customer Invoice", category: "income" },
-    { text: "Rent Payment", category: "expense" },
-    { text: "Logistics Cost", category: "expense" },
-    { text: "Sales Revenue", category: "income" },
-    { text: "Payroll", category: "expense" },
-    { text: "Utilities Bill", category: "expense" },
-    { text: "Marketing Cost", category: "expense" },
-    { text: "Inventory Purchase", category: "expense" },
-  ];
-
+const generateDummyTransactions = (): Transaction[] => {
   return [
     {
       id: "1",
@@ -331,7 +318,7 @@ export default function BankConnectionPage() {
     );
 
     setConnectedBank(bankName);
-    setTransactions(generateDummyTransactions(bankName));
+    setTransactions(generateDummyTransactions());
   };
 
   const generateCSV = (): string => {

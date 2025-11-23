@@ -4,7 +4,6 @@ import {
   Building2,
   TrendingUp,
   MessageSquare,
-  Award,
   Settings,
   FileText,
   Menu,
@@ -12,28 +11,27 @@ import {
   ChevronRight,
   LogOut,
 } from "lucide-react";
+import { useNavigate, useLocation } from "@tanstack/react-router";
 
-import { useNavigate } from "@tanstack/react-router";
-
-// NAV ITEM
+// ---------------- NavItem ----------------
 interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   route: string;
-  active?: boolean;
   badge?: string;
   hasSubmenu?: boolean;
   isCollapsed: boolean;
+  active: boolean;
   onClick: () => void;
 }
 
 const NavItem: React.FC<NavItemProps> = ({
   icon,
   label,
-  active = false,
   badge,
   hasSubmenu = false,
   isCollapsed,
+  active,
   onClick,
 }) => {
   return (
@@ -41,11 +39,7 @@ const NavItem: React.FC<NavItemProps> = ({
       onClick={onClick}
       className={`
         w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all group
-        ${
-          active
-            ? "bg-blue-500/20 text-blue-400"
-            : "text-slate-400 hover:bg-slate-700/50 hover:text-white"
-        }
+        ${active ? "bg-blue-500/20 text-blue-400" : "text-slate-400 hover:bg-slate-700/50 hover:text-white"}
       `}
     >
       <div className="flex items-center gap-3 min-w-0">
@@ -71,39 +65,42 @@ const NavItem: React.FC<NavItemProps> = ({
   );
 };
 
-// SECTION
+// ---------------- SidebarSection ----------------
 interface SidebarSectionProps {
   title: string;
   isCollapsed: boolean;
+  children: React.ReactNode;
 }
 
-const SidebarSection: React.FC<
-  SidebarSectionProps & { children: React.ReactNode }
-> = ({ title, isCollapsed, children }) => {
-  return (
-    <div className="mb-6">
-      {!isCollapsed && (
-        <div className="px-4 mb-3">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            {title}
-          </h3>
-        </div>
-      )}
-      <div className="space-y-1">{children}</div>
-    </div>
-  );
-};
+const SidebarSection: React.FC<SidebarSectionProps> = ({
+  title,
+  isCollapsed,
+  children,
+}) => (
+  <div className="mb-6">
+    {!isCollapsed && (
+      <div className="px-4 mb-3">
+        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          {title}
+        </h3>
+      </div>
+    )}
+    <div className="space-y-1">{children}</div>
+  </div>
+);
 
-// SIDEBAR MAIN
+// ---------------- Sidebar ----------------
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [activeItem, setActiveItem] = useState("dashboard");
+  // derive active item from current path
+  const currentPath = location.pathname;
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const goTo = (route: string, item: string) => {
-    setActiveItem(item);
+  const goTo = (route: string) => {
     navigate({ to: route });
     setIsMobileOpen(false);
   };
@@ -112,12 +109,11 @@ const Sidebar: React.FC = () => {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-slate-700">
-        {!isCollapsed && (
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-white">FinEdge AI</h1>
-          </div>
+        {!isCollapsed ? (
+          <h1 className="text-xl font-bold text-white">FinEdge AI</h1>
+        ) : (
+          <span className="text-2xl text-white mx-auto">FE</span>
         )}
-        {isCollapsed && <span className="text-2xl mx-auto">🔥</span>}
       </div>
 
       {/* Navigation */}
@@ -128,54 +124,34 @@ const Sidebar: React.FC = () => {
             icon={<LayoutDashboard className="w-5 h-5" />}
             label="Dashboard"
             route="/dashboard"
-            active={activeItem === "dashboard"}
+            active={currentPath === "/dashboard"}
             badge="3"
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/dashboard", "dashboard")}
+            onClick={() => goTo("/dashboard")}
           />
-
           <NavItem
             icon={<Building2 className="w-5 h-5" />}
             label="Banks"
             route="/bank"
-            active={activeItem === "bank"}
+            active={currentPath === "/bank"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/bank", "bank")}
+            onClick={() => goTo("/bank")}
           />
-
           <NavItem
             icon={<TrendingUp className="w-5 h-5" />}
             label="Cash Flow"
             route="/cashflow"
-            active={activeItem === "cashflow"}
+            active={currentPath === "/cashflow"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/cashflow", "cashflow")}
+            onClick={() => goTo("/cashflow")}
           />
-
           <NavItem
             icon={<MessageSquare className="w-5 h-5" />}
-            label="AICoach"
+            label="AI Coach"
             route="/Ai_coach"
-            active={activeItem === "Ai_coach"}
+            active={currentPath === "/Ai_coach"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/Ai_coach", "Ai_coach")}
-          />
-
-          <NavItem
-            icon={<Award className="w-5 h-5" />}
-            label="Credit Score"
-            route="/credit"
-            active={activeItem === "credit"}
-            isCollapsed={isCollapsed}
-            onClick={() => goTo("/credit", "credit")}
-          />
-          <NavItem
-            icon={<Award className="w-5 h-5" />}
-            label="Banks"
-            route="/bank"
-            active={activeItem === "credit"}
-            isCollapsed={isCollapsed}
-            onClick={() => goTo("/bank", "bank")}
+            onClick={() => goTo("/Ai_coach")}
           />
         </SidebarSection>
 
@@ -185,18 +161,17 @@ const Sidebar: React.FC = () => {
             icon={<FileText className="w-5 h-5" />}
             label="Insights"
             route="/insights"
-            active={activeItem === "insights"}
+            active={currentPath === "/insights"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/insights", "insights")}
+            onClick={() => goTo("/insights")}
           />
-
           <NavItem
             icon={<FileText className="w-5 h-5" />}
             label="Expense Report"
-            route="/expenses"
-            active={activeItem === "expenses"}
+            route="/expenseReport"
+            active={currentPath === "/expenseReport"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/expenses", "expenses")}
+            onClick={() => goTo("/expenseReport")}
           />
         </SidebarSection>
 
@@ -206,9 +181,9 @@ const Sidebar: React.FC = () => {
             icon={<Settings className="w-5 h-5" />}
             label="Settings"
             route="/settings"
-            active={activeItem === "settings"}
+            active={currentPath === "/settings"}
             isCollapsed={isCollapsed}
-            onClick={() => goTo("/settings", "settings")}
+            onClick={() => goTo("/settings")}
           />
         </SidebarSection>
       </div>
@@ -216,7 +191,7 @@ const Sidebar: React.FC = () => {
       {/* LOGOUT */}
       <div className="border-t border-slate-700 p-4">
         <button
-          onClick={() => navigate({ to: "/Auth/" })}
+          onClick={() => goTo("/logout")}
           className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all"
         >
           <LogOut className="w-5 h-5" />

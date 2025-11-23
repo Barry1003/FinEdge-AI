@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { 
   LayoutDashboard, 
-  Upload, 
-  List, 
+  Building2, 
   TrendingUp, 
   MessageSquare, 
   Award,
@@ -149,21 +148,12 @@ const Sidebar: React.FC = () => {
           />
 
           <NavItem
-            icon={<Upload className="w-5 h-5" />}
-            label="Upload CSV"
-            route="/upload"
-            active={activeItem === 'upload'}
+            icon={<Building2 className="w-5 h-5" />}
+            label="Banks"
+            route="/bank"
+            active={activeItem === 'bank'}
             isCollapsed={isCollapsed}
-            onClick={() => goTo('/upload', 'upload')}
-          />
-
-          <NavItem
-            icon={<List className="w-5 h-5" />}
-            label="Transactions"
-            route="/transactions"
-            active={activeItem === 'transactions'}
-            isCollapsed={isCollapsed}
-            onClick={() => goTo('/transactions', 'transactions')}
+            onClick={() => goTo('/bank', 'bank')}
           />
 
           <NavItem
@@ -177,7 +167,7 @@ const Sidebar: React.FC = () => {
 
           <NavItem
             icon={<MessageSquare className="w-5 h-5" />}
-            label="AI Coach"
+            label="Ai_Coach"
             route="/coach"
             active={activeItem === 'coach'}
             isCollapsed={isCollapsed}

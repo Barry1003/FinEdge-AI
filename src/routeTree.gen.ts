@@ -15,6 +15,7 @@ import { Route as BankIndexRouteImport } from './routes/bank/index'
 import { Route as AlertIndexRouteImport } from './routes/alert/index'
 import { Route as DashboardIndexRouteImport } from './routes/Dashboard/index'
 import { Route as AuthIndexRouteImport } from './routes/Auth/index'
+import { Route as Ai_CoachIndexRouteImport } from './routes/Ai_Coach/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,9 +47,15 @@ const AuthIndexRoute = AuthIndexRouteImport.update({
   path: '/Auth/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Ai_CoachIndexRoute = Ai_CoachIndexRouteImport.update({
+  id: '/Ai_Coach/',
+  path: '/Ai_Coach/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/Ai_Coach': typeof Ai_CoachIndexRoute
   '/Auth': typeof AuthIndexRoute
   '/Dashboard': typeof DashboardIndexRoute
   '/alert': typeof AlertIndexRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/Ai_Coach': typeof Ai_CoachIndexRoute
   '/Auth': typeof AuthIndexRoute
   '/Dashboard': typeof DashboardIndexRoute
   '/alert': typeof AlertIndexRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/Ai_Coach/': typeof Ai_CoachIndexRoute
   '/Auth/': typeof AuthIndexRoute
   '/Dashboard/': typeof DashboardIndexRoute
   '/alert/': typeof AlertIndexRoute
@@ -74,12 +83,27 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Auth' | '/Dashboard' | '/alert' | '/bank' | '/cashflow'
+  fullPaths:
+    | '/'
+    | '/Ai_Coach'
+    | '/Auth'
+    | '/Dashboard'
+    | '/alert'
+    | '/bank'
+    | '/cashflow'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Auth' | '/Dashboard' | '/alert' | '/bank' | '/cashflow'
+  to:
+    | '/'
+    | '/Ai_Coach'
+    | '/Auth'
+    | '/Dashboard'
+    | '/alert'
+    | '/bank'
+    | '/cashflow'
   id:
     | '__root__'
     | '/'
+    | '/Ai_Coach/'
     | '/Auth/'
     | '/Dashboard/'
     | '/alert/'
@@ -89,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  Ai_CoachIndexRoute: typeof Ai_CoachIndexRoute
   AuthIndexRoute: typeof AuthIndexRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   AlertIndexRoute: typeof AlertIndexRoute
@@ -140,11 +165,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/Ai_Coach/': {
+      id: '/Ai_Coach/'
+      path: '/Ai_Coach'
+      fullPath: '/Ai_Coach'
+      preLoaderRoute: typeof Ai_CoachIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Ai_CoachIndexRoute: Ai_CoachIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   AlertIndexRoute: AlertIndexRoute,
